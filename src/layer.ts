@@ -71,7 +71,7 @@ export default class layer {
      */
     distortion (λ: number, φ: number, x: number, y: number): number[] {
         const τ = 2 * Math.PI;
-        const H = Math.pow(10, -5.2);
+        const H = 5;
         const hλ = λ < 0 ? H : -H;
         const hφ = φ < 0 ? H : -H;
 
