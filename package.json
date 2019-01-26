@@ -1,5 +1,5 @@
 {
-  "name": "simple-leaflet",
+  "name": "leaflet-velocity-ts-module",
   "version": "1.0.0",
   "description": "",
   "module": "dist/bundle.es.js",
@@ -7,11 +7,14 @@
   "types": "types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "watch": "webpack --progress --colors --watch"
+    "build": "node build/index.js"
   },
+  "files": [
+    "dist/*.js",
+    "types/*.d.ts"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "rollup": "^1.1.2",
     "rollup-plugin-typescript": "^1.0.0",
