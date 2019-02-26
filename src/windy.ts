@@ -25,10 +25,12 @@ export default class Windy {
     private animationLoop: any = null;
     private frameTime: number;
     private then = 0;
+    private isZqSource = false;
      
 
     constructor(options: any) {
         this.canvas = options.canvas;
+        this.isZqSource = options.isZqSource;
         if (options.minVelocity === undefined && options.maxVelocity === undefined) {
             this.autoColorRange = true;
         }
@@ -75,13 +77,30 @@ export default class Windy {
             return;
         }
 
-        uData.data.forEach((u: number, index: number) => {
-            grid.push(new Vector(u, vData.data[index]));
-        })
+        let la: number = uData.header.la1;
+
+        if(this.isZqSource) {
+            let ni: number = uData.header.nx;
+            let nj: number = uData.header.ny;
+            let p: number = 0;
+            la = Math.max(uData.header.la1, uData.header.la2);
+            for(let j = nj - 1; j >= 0; j = j - 1) {
+                for(let i = 0; i < ni; i = i + 1, p = p + 1) {
+                    grid[j * ni + i] = new Vector(uData.data[p], vData.data[p])
+                }
+            }
+        }
+
+        else {
+            uData.data.forEach((u: number, index: number) => {
+                grid.push(new Vector(u, vData.data[index]));
+            })
+        }
+        
 
         this.grid = new Grid (
             grid,
-            uData.header.la1,
+            la,
             uData.header.lo1,
             uData.header.dy,
             uData.header.dx,
